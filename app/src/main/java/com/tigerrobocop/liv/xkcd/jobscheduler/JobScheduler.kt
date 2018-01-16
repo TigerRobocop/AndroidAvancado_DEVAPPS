@@ -7,9 +7,10 @@ import android.content.ComponentName
 import android.app.job.JobParameters
 import android.content.Intent
 import android.app.job.JobService
+import android.util.Log
 import com.tigerrobocop.liv.xkcd.service.RequestService
 
-
+////http://www.vogella.com/tutorials/AndroidTaskScheduling/article.html
 fun scheduleJob (context : Context){
 
     val serviceComponent = ComponentName(context, InitJobService::class.java)
@@ -31,6 +32,8 @@ fun scheduleJob (context : Context){
 class InitJobService : JobService() {
 
     override fun onStartJob(params: JobParameters): Boolean {
+
+        Log.d(TAG, "job scheduler started - auto")
 
         val service = Intent(applicationContext, RequestService::class.java)
 

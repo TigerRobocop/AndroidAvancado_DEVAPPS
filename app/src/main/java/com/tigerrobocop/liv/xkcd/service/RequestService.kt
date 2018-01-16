@@ -3,12 +3,12 @@ package com.tigerrobocop.liv.xkcd.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.os.AsyncTask.execute
 import android.util.Log
 import java.util.*
-import java.util.UUID.randomUUID
-import android.content.ContentValues.TAG
 import android.os.AsyncTask
+import com.tigerrobocop.liv.xkcd.model.XKCD
+import android.R.attr.apiKey
+import android.os.AsyncTask.execute
 
 
 
@@ -40,30 +40,41 @@ class RequestService : Service() {
     }
 
 
-    inner class GetComicTask : AsyncTask<String, String, String>() {
+    inner class GetComicTask : AsyncTask<Void, Void, XKCD?>() {
 
 
-        override fun doInBackground(vararg p0: String?): String {
+        override fun doInBackground(vararg p0: Void?): XKCD? {
 
-            var result = ""
+            val repo = APIService.create()
 
-            Log.d(TAG, "done PROCESS + " + uuid)
-            return result
+            val response = repo.getXKCD().execute()
+
+            return response.body()
+
+/*var result : XKCD? = null
+
+Log.d(TAG, "done PROCESS + " + uuid)
+return result*/
+
+}
+
+        override fun onPostExecute(result: XKCD?) {
+            super.onPostExecute(result)
+
+            // todo :: add local persistance
         }
 
-        /*
+/*
 
-      override fun onPreExecute() {
-          super.onPreExecute()
-         // MyprogressBar.visibility = View.VISIBLE;
-      }
-
-      override fun onPostExecute(result: String?) {
-          super.onPostExecute(result)
-      }
-
-      */
+override fun onPreExecute() {
+super.onPreExecute()
+// MyprogressBar.visibility = View.VISIBLE;
+}
 
 
-    }
+
+*/
+
+
+}
 }

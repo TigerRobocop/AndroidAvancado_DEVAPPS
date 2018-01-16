@@ -1,8 +1,10 @@
 package com.tigerrobocop.liv.xkcd.model
 
-/**
- * Created by Livia on 06/01/2018.
- */
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+
+@Entity(tableName = "xkcd")
 data class XKCD (
         var month: String?
         , var num: String?
@@ -15,4 +17,7 @@ data class XKCD (
         , var img: String?
         , var title: String?
         , var day: String?
-)
+){
+    @ColumnInfo(name = "id")
+    @PrimaryKey(autoGenerate = true) var id: Long = 0
+}
