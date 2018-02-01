@@ -49,6 +49,8 @@ class RequestService : Service() {
 
             val response = repo.getXKCD().execute()
 
+          //  var result : XKCD? = response.body()
+
             return response.body()
 
 /*var result : XKCD? = null
@@ -60,6 +62,7 @@ return result*/
 
         override fun onPostExecute(result: XKCD?) {
             super.onPostExecute(result)
+            Log.d(TAG, "done PROCESS + " + result?.img)
 
             // todo :: add local persistance
         }

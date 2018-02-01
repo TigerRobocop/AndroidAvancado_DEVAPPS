@@ -3,9 +3,9 @@
 buildscript {
 
     ext {
-        buildToolsVersion = "25.0.2"
-        supportLibVersion = "25.3.1"
-        archRoomVersion = "1.0.0-alpha1"
+        //buildToolsVersion = "25.0.2"
+        //supportLibVersion = "25.3.1"
+        //archRoomVersion = "1.0.0-alpha1"
         kotlin_version = '1.1.51'
     }
 
