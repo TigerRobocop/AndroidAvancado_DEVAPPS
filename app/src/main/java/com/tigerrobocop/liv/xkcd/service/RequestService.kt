@@ -1,17 +1,16 @@
 package com.tigerrobocop.liv.xkcd.service
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import java.util.*
 import android.os.AsyncTask
+import com.tigerrobocop.liv.xkcd.XKCDApp
 import com.tigerrobocop.liv.xkcd.model.XKCD
-import android.R.attr.apiKey
-import android.os.AsyncTask.execute
-
-
-
+import android.widget.Toast
+import android.app.Activity
 
 
 class RequestService : Service() {
@@ -26,15 +25,13 @@ class RequestService : Service() {
     private val TAG = RequestService::class.java.simpleName
     private var uuid = UUID.randomUUID().toString()
 
-
+    val mDAO = XKCDApp.DB_INSTANCE.xkcdDao()
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.d(TAG, "START PROCESS uuid -> " + uuid)
 
-        val task = GetComicTask ()
+        val task = GetComicTask()
         task.execute()
-
-        //Log.d(TAG, "START PROCESS")
 
         return Service.START_STICKY
     }
@@ -42,42 +39,29 @@ class RequestService : Service() {
 
     inner class GetComicTask : AsyncTask<Void, Void, XKCD?>() {
 
-
         override fun doInBackground(vararg p0: Void?): XKCD? {
 
             val repo = APIService.create()
-
             val response = repo.getXKCD().execute()
-
-          //  var result : XKCD? = response.body()
-
             return response.body()
-
-/*var result : XKCD? = null
-
-Log.d(TAG, "done PROCESS + " + uuid)
-return result*/
-
-}
+        }
 
         override fun onPostExecute(result: XKCD?) {
             super.onPostExecute(result)
-            Log.d(TAG, "done PROCESS + " + result?.img)
 
-            // todo :: add local persistance
+
+            if (result != null) {
+
+                Log.d(TAG, "done PROCESS :: " + result.img)
+
+                // run the sentence in a new thread
+                Thread(Runnable {
+                    mDAO.insertXKCD(result)
+                    Log.d(TAG, "item inserted :: " + result.img)
+                }).start()
+
+            }
         }
 
-/*
-
-override fun onPreExecute() {
-super.onPreExecute()
-// MyprogressBar.visibility = View.VISIBLE;
-}
-
-
-
-*/
-
-
-}
+    }
 }
