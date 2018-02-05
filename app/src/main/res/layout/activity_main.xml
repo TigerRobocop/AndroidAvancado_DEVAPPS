@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.tigerrobocop.liv.xkcd.MainActivity">
 
+    <fragment
+        android:id="@+id/list_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.tigerrobocop.liv.xkcd.ListFragment"/>
+
+    <!--
     <Button
         android:id="@+id/btnTrigger"
         android:layout_width="176dp"
@@ -21,4 +28,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+        -->
 </android.support.constraint.ConstraintLayout>
