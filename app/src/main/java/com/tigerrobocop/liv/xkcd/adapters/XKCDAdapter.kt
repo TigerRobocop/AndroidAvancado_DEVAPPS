@@ -16,19 +16,10 @@ import kotlinx.android.synthetic.main.list_item.view.*
 /**
  * Created by Livia on 04/02/2018.
  */
-open class XKCDAdapter (context : Context, resource: Int, objects: ArrayList<XKCD>)
-    : ArrayAdapter<XKCD>(context, resource, objects) {
+open class XKCDAdapter(context: Context, objects: ArrayList<XKCD>)
+    : ArrayAdapter<XKCD>(context, 0, objects) {
 
-   // var resource: Int
-   var resource: Int
-    var list: ArrayList<XKCD>
-    var vi: LayoutInflater
-
-    init {
-       this.resource = resource
-        this.list = objects
-        this.vi = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    }
+    private var vi: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
@@ -37,10 +28,10 @@ open class XKCDAdapter (context : Context, resource: Int, objects: ArrayList<XKC
 
         if (convertView == null) {
 
-            retView = vi.inflate(resource, null)
+            retView = vi.inflate(R.layout.list_item, null)
             viewHolder = ViewHolder()
 
-            viewHolder.mImg  = retView?.img_image
+            viewHolder.mImg = retView?.img_image
             viewHolder.mTxtMediaType = retView?.lbl_img_info
             viewHolder.mTxtTitle = retView?.lbl_title
 
@@ -59,7 +50,7 @@ open class XKCDAdapter (context : Context, resource: Int, objects: ArrayList<XKC
             viewHolder.mTxtMediaType?.text = item.day
             viewHolder.mTxtTitle?.text = item.title
 
-          //  viewHolder.mTxtMediaType.setText(item.media_type + " - " + Util.FormatDate(item.date))
+            //  viewHolder.mTxtMediaType.setText(item.media_type + " - " + Util.FormatDate(item.date))
 
             Picasso.with(context).load(item.img).into(viewHolder.mImg)
 

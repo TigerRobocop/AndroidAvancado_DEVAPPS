@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tigerrobocop.liv.xkcd.MainActivity">
 
-    <fragment
-        android:id="@+id/list_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.tigerrobocop.liv.xkcd.ListFragment"/>
+    <!-- <android.support.v4.widget.SwipeRefreshLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/swipe_container"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">-->
 
-    <!--
-    <Button
-        android:id="@+id/btnTrigger"
-        android:layout_width="176dp"
-        android:layout_height="87dp"
-        android:layout_marginBottom="367dp"
-        android:layout_marginEnd="204dp"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="96dp"
-        android:text="Trigger JobScheduler"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.022"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-        -->
+         <fragment
+             android:id="@+id/list_fragment"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:name="com.tigerrobocop.liv.xkcd.ListFragment"/>
+
+   <!--  </android.support.v4.widget.SwipeRefreshLayout>-->
+     <!--
+     <Button
+         android:id="@+id/btnTrigger"
+         android:layout_width="176dp"
+         android:layout_height="87dp"
+         android:layout_marginBottom="367dp"
+         android:layout_marginEnd="204dp"
+         android:layout_marginStart="92dp"
+         android:layout_marginTop="96dp"
+         android:text="Trigger JobScheduler"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.022"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.0" />
+         -->
 </android.support.constraint.ConstraintLayout>

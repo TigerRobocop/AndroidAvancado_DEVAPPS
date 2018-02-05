@@ -10,34 +10,60 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import com.tigerrobocop.liv.xkcd.R.id.list_item
 import com.tigerrobocop.liv.xkcd.adapters.XKCDAdapter
 import com.tigerrobocop.liv.xkcd.model.XKCD
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v4.view.ViewCompat
+
+
+
 
 
 class ListFragment : android.support.v4.app.ListFragment() {
 
     private val TAG = ListFragment::class.java.simpleName
 
-    val mDAO = XKCDApp.DB_INSTANCE.xkcdDao()
+    private val mDAO = XKCDApp.DB_INSTANCE.xkcdDao()
 
-    lateinit var mAdapter: XKCDAdapter
-    lateinit var mList : ArrayList<XKCD>
+    private lateinit var mAdapter: XKCDAdapter
+    private lateinit var mList : ArrayList<XKCD>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
 
-        mList = ArrayList<XKCD>()
+        mList = ArrayList()
         setAdapter()
     }
 
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        var listFragmentView = super.onCreateView(inflater, container, savedInstanceState)
+
+        /* mSwipeRefreshLayout = ListFragmentSwipeRefreshLayout(container!!.context)
+
+        if(mSwipeRefreshLayout != null){
+
+            // Add the list fragment's content view to the SwipeRefreshLayout, making sure that it fills
+            // the SwipeRefreshLayout
+            mSwipeRefreshLayout?.addView(listFragmentView,
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+            // Make sure that the SwipeRefreshLayout will fill the fragment
+            mSwipeRefreshLayout?.layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT)
+        } */
+
+        return listFragmentView
+    }
+
     private fun setAdapter() {
-        mAdapter = XKCDAdapter(activity, list_item, mList)
+        mAdapter = XKCDAdapter(activity, mList)
         listAdapter = mAdapter
     }
 
-    fun loadList(){
+    private fun loadList(){
         mList.clear()
 
         // run the sentence in a new thread
@@ -61,11 +87,54 @@ class ListFragment : android.support.v4.app.ListFragment() {
         if(l != null){
             val xkcd = l.getItemAtPosition(position) as XKCD
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(xkcd.img)))
-            // todo :: implement list clict in new activity
+            // todo :: implement list click in new activity
+        }
+    }
+
+
+    // TODO :: IMPLEMENT SWIPE TO REFRESH
+
+    private var mSwipeRefreshLayout: SwipeRefreshLayout? = null
+
+    fun setOnRefreshListener(listener: SwipeRefreshLayout.OnRefreshListener) {
+        mSwipeRefreshLayout?.setOnRefreshListener(listener)
+    }
+    private inner class ListFragmentSwipeRefreshLayout(context: Context) : SwipeRefreshLayout(context) {
+
+        /**
+         * As mentioned above, we need to override this method to properly signal when a
+         * 'swipe-to-refresh' is possible.
+         *
+         * @return true if the [android.widget.ListView] is visible and can scroll up.
+         */
+        override fun canChildScrollUp(): Boolean {
+            val listView = listView
+            return if (listView.visibility == View.VISIBLE) {
+                canListViewScrollUp(listView)
+            } else {
+                false
+            }
         }
 
     }
 
+    // BEGIN_INCLUDE (check_list_can_scroll)
+    /**
+     * Utility method to check whether a [ListView] can scroll up from it's current position.
+     * Handles platform version differences, providing backwards compatible functionality where
+     * needed.
+     */
+    private fun canListViewScrollUp(listView: ListView): Boolean {
+        return if (android.os.Build.VERSION.SDK_INT >= 14) {
+            // For ICS and above we can call canScrollVertically() to determine this
+            ViewCompat.canScrollVertically(listView, -1)
+        } else {
+            // Pre-ICS we need to manually check the first visible item and the child view's top
+            // value
+            listView.childCount > 0 && (listView.firstVisiblePosition > 0 || listView.getChildAt(0).top < listView.paddingTop)
+        }
+    }
+    // END_INCLUDE (check_list_can_scroll)
 
 
 }
