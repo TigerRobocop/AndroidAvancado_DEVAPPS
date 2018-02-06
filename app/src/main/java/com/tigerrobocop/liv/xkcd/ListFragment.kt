@@ -86,7 +86,10 @@ class ListFragment : android.support.v4.app.ListFragment() {
 
         if(l != null){
             val xkcd = l.getItemAtPosition(position) as XKCD
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(xkcd.img)))
+            //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(xkcd.img)))
+            val intent = Intent(activity, DetailsActivity::class.java)
+            intent.putExtra("itemDetails", xkcd)
+            startActivity(intent)
             // todo :: implement list click in new activity
         }
     }
@@ -127,7 +130,7 @@ class ListFragment : android.support.v4.app.ListFragment() {
     private fun canListViewScrollUp(listView: ListView): Boolean {
         return if (android.os.Build.VERSION.SDK_INT >= 14) {
             // For ICS and above we can call canScrollVertically() to determine this
-            ViewCompat.canScrollVertically(listView, -1)
+           true // ViewCompat.canScrollVertically(listView, -1)
         } else {
             // Pre-ICS we need to manually check the first visible item and the child view's top
             // value

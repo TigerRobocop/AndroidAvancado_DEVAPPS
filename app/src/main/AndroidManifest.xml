@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".broadcastreceivers.BootReceiver" >
+        <receiver android:name=".broadcastreceivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -30,16 +30,13 @@
         <service
             android:name=".jobscheduler.InitJobService"
             android:label="Word service"
-            android:permission="android.permission.BIND_JOB_SERVICE" >
-        </service>
-
+            android:permission="android.permission.BIND_JOB_SERVICE"></service>
         <service
             android:name=".service.RequestService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-
-
+        <activity android:name=".DetailsActivity"></activity>
     </application>
 
 </manifest>

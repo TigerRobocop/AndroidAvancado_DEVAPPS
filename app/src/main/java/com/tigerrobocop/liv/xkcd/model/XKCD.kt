@@ -3,9 +3,10 @@ package com.tigerrobocop.liv.xkcd.model
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "xkcd")
-data class XKCD (
+data class XKCD  (
         var month: String?
         , var num: String?
         , var link: String?
@@ -17,7 +18,7 @@ data class XKCD (
         , var img: String?
         , var title: String?
         , var day: String?
-){
+) : Serializable {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true) var id: Long = 0
 }
