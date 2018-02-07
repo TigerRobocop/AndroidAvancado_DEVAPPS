@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.tigerrobocop.liv.xkcd.model.XKCD
 import kotlinx.android.synthetic.main.fragment_details.*
+import kotlinx.android.synthetic.main.fragment_details.view.*
 
 
 class DetailsFragment : android.support.v4.app.Fragment() {
@@ -42,7 +43,7 @@ class DetailsFragment : android.support.v4.app.Fragment() {
         var view = inflater.inflate(R.layout.fragment_details, container, false)
 
         var teste = ""
-       // Picasso.with(context).load(mXKCD?.img).into(img_details)
+       Picasso.with(context).load(mXKCD?.img).into(view.img_details)
 
         return view
     }
