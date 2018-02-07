@@ -7,7 +7,7 @@ import com.tigerrobocop.liv.xkcd.model.XKCD
 
 @Dao
 interface DAO {
-    @Query("select * from xkcd")
+    @Query("select * from xkcd order by id desc")
     fun getAllXKCD(): List<XKCD>
 
     //@Query("select * from xkcd where id = :p0")

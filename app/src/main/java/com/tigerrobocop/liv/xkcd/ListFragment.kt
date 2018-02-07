@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
+import android.content.BroadcastReceiver
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -58,12 +59,12 @@ class ListFragment : android.support.v4.app.ListFragment() {
         return listFragmentView
     }
 
-    private fun setAdapter() {
+    fun setAdapter() {
         mAdapter = XKCDAdapter(activity, mList)
         listAdapter = mAdapter
     }
 
-    private fun loadList(){
+    fun loadList(){
         mList.clear()
 
         // run the sentence in a new thread
@@ -93,6 +94,16 @@ class ListFragment : android.support.v4.app.ListFragment() {
             // todo :: implement list click in new activity
         }
     }
+
+    inner class ServiceReceiver : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+
+            if(mList != null && mAdapter != null) loadList()
+        }
+    }
+
+
 
 
     // TODO :: IMPLEMENT SWIPE TO REFRESH

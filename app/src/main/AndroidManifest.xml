@@ -27,6 +27,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".broadcastreceivers.ServiceReceiver" >
+            <intent-filter>
+                <action android:name="loadList" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".jobscheduler.InitJobService"
             android:label="Word service"

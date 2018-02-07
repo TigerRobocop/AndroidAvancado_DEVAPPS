@@ -10,6 +10,12 @@ import com.tigerrobocop.liv.xkcd.jobscheduler.scheduleJob
 import com.tigerrobocop.liv.xkcd.model.XKCD
 import com.tigerrobocop.liv.xkcd.service.RequestService
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.ComponentName
+import android.content.Context
+import android.os.IBinder
+import android.content.ServiceConnection
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mFragmentManager: FragmentManager
     private var mListFragment: ListFragment? = null
 
+    private var service: RequestService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         mListFragment = mFragmentManager.findFragmentById(R.id.list_fragment) as ListFragment
 
 
+        /*
+        bindService(Intent(
+                this, RequestService::class.java),
+                mServiceConnection, Context.BIND_AUTO_CREATE)*/
 
         /*        btnTrigger.setOnClickListener {
 
@@ -47,4 +58,16 @@ class MainActivity : AppCompatActivity() {
         */
 
     }
+
+    /*
+    var mServiceConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
+            val getBinder = iBinder as RequestService.GetBinder
+            service = getBinder.boundService
+        }
+
+        override fun onServiceDisconnected(componentName: ComponentName) {
+
+        }
+    }*/
 }

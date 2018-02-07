@@ -11,16 +11,27 @@ import com.tigerrobocop.liv.xkcd.XKCDApp
 import com.tigerrobocop.liv.xkcd.model.XKCD
 import android.widget.Toast
 import android.app.Activity
+import android.os.Binder
 
 
 class RequestService : Service() {
 
+    private val getBinder = GetBinder()
     // tutorial source: http://www.techotopia.com/index.php/Android_Started_Service_%E2%80%93_A_Kotlin_Example
-    override fun onBind(intent: Intent): IBinder? {
-        // TODO: Return the communication channel to the service.
-        throw UnsupportedOperationException("Not yet implemented")
+
+
+
+    inner class GetBinder : Binder() {
+        val boundService: RequestService
+            get() = this@RequestService
     }
 
+    override fun onBind(intent: Intent): IBinder? {
+
+        return getBinder
+
+       // throw UnsupportedOperationException("Not yet implemented")
+    }
 
     private val TAG = RequestService::class.java.simpleName
     private var uuid = UUID.randomUUID().toString()
@@ -49,7 +60,6 @@ class RequestService : Service() {
         override fun onPostExecute(result: XKCD?) {
             super.onPostExecute(result)
 
-
             if (result != null) {
 
                 Log.d(TAG, "done PROCESS :: " + result.img)
@@ -58,6 +68,11 @@ class RequestService : Service() {
                 Thread(Runnable {
                     mDAO.insertXKCD(result)
                     Log.d(TAG, "item inserted :: " + result.img)
+
+                    val intent = Intent()
+                    intent.action = "loadList"
+                    //intent.putExtra("url", uri.toString())
+                    sendBroadcast(intent)
                 }).start()
 
             }

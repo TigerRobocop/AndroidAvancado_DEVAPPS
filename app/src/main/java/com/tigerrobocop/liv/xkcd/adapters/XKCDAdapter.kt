@@ -47,7 +47,7 @@ open class XKCDAdapter(context: Context, objects: ArrayList<XKCD>)
 
         if (item != null) {
 
-            viewHolder.mTxtMediaType?.text = item.id.toString()
+            viewHolder.mTxtMediaType?.text = item.id.toString() + " - " + item.day + "/" + item.month + "/" + item.year
             viewHolder.mTxtTitle?.text = item.title
 
             //  viewHolder.mTxtMediaType.setText(item.media_type + " - " + Util.FormatDate(item.date))
